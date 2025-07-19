@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "artillery:block/gun_block" }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "itemGroup.artillery": "Artillery",
+  "screen.artillery.title": "Artillery Control",
+  "screen.artillery.calc": "\uacc4\uc0b0",
+  "screen.artillery.fire": "\ubc1c\uc0ac",
+  "screen.artillery.recon": "\uc815\ucc30",
+  "screen.recon.title": "\uc815\ucc30",
+  "screen.recon.move": "\uc774\ub3d9",
+  "screen.recon.pick": "\ubaa9\ud45c\uc124\uc815",
+  "screen.recon.exit": "\ubcf5\uadc0",
+  "button.artillery.recon": "\uc815\ucc30",
+  "button.artillery.solve": "\ubc1c\uc0ac\uac01 \uacc4\uc0b0",
+  "button.artillery.fire_high": "\ubc1c\uc0ac(\uace0\uac01)",
+  "button.artillery.fire_low": "\ubc1c\uc0ac(\uc800\uac01)"
+}
