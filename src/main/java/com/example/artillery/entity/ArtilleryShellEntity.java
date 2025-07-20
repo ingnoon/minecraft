@@ -6,11 +6,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraftforge.network.NetworkHooks;
 
 public class ArtilleryShellEntity extends Entity {
     private Vec3 vel = Vec3.ZERO;
@@ -88,6 +88,6 @@ public class ArtilleryShellEntity extends Entity {
 
     @Override
     public Packet<?> getAddEntityPacket() {{
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return new ClientboundAddEntityPacket(this);
     }}
 }

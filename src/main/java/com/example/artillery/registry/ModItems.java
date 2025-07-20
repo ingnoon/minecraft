@@ -1,17 +1,20 @@
 package com.example.artillery.registry;
 
 import com.example.artillery.ArtilleryMod;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public final class ModItems {
     private ModItems(){}
-    public static final DeferredRegister<Item> ITEMS =
-        DeferredRegister.create(ForgeRegistries.ITEMS, ArtilleryMod.MODID);
 
-    public static final RegistryObject<Item> GUN_BLOCK_ITEM =
-        ITEMS.register("gun_block", () -> new BlockItem(ModBlocks.GUN_BLOCK.get(), new Item.Properties()));
+    public static Item GUN_BLOCK_ITEM;
+
+    public static void register() {
+        GUN_BLOCK_ITEM = Registry.register(BuiltInRegistries.ITEM,
+            new ResourceLocation(ArtilleryMod.MODID, "gun_block"),
+            new BlockItem(ModBlocks.GUN_BLOCK, new Item.Properties()));
+    }
 }

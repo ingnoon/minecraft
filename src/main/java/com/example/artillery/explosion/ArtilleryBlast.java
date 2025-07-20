@@ -16,9 +16,9 @@ public final class ArtilleryBlast {
 
     public static void explode(Level lvl, Vec3 pos){
         explode(lvl,pos,
-            ArtilleryConfig.BLAST_RADIUS.get(),
-            ArtilleryConfig.CASUALTY_RADIUS.get(),
-            ArtilleryConfig.BASE_DAMAGE.get().floatValue());
+            ArtilleryConfig.BLAST_RADIUS,
+            ArtilleryConfig.CASUALTY_RADIUS,
+            (float)ArtilleryConfig.BASE_DAMAGE);
     }
 
     public static void explode(Level lvl, Vec3 pos, double blockR, double casualtyR, float baseDamage){
