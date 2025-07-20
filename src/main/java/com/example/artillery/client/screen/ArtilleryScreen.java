@@ -9,7 +9,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.network.PacketDistributor;
 
 public final class ArtilleryScreen extends AbstractContainerScreen<ArtilleryMenu> {
 
@@ -60,23 +59,23 @@ public final class ArtilleryScreen extends AbstractContainerScreen<ArtilleryMenu
             targetX.setIntValue(bp.getX());
             targetY.setIntValue(bp.getY());
             targetZ.setIntValue(bp.getZ());
-            NetworkHandler.CHANNEL.sendToServer(new C2S_SetTarget(gun.getBlockPos(), bp));
+            C2S_SetTarget.send(gun.getBlockPos(), bp);
         }
     }
 
     private void onSolve(){
         // push muzzle vel change if edited
         int vel = muzzleField.getIntValue(gun.getMuzzleVel());
-        NetworkHandler.CHANNEL.sendToServer(new C2S_SetMuzzleVel(gun.getBlockPos(), vel));
+        C2S_SetMuzzleVel.send(gun.getBlockPos(), vel);
         // push target
-        NetworkHandler.CHANNEL.sendToServer(new C2S_SetTarget(gun.getBlockPos(),
-            new net.minecraft.core.BlockPos(targetX.getIntValue(0), targetY.getIntValue(0), targetZ.getIntValue(0))));
+        C2S_SetTarget.send(gun.getBlockPos(),
+            new net.minecraft.core.BlockPos(targetX.getIntValue(0), targetY.getIntValue(0), targetZ.getIntValue(0)));
         // request solve
-        NetworkHandler.CHANNEL.sendToServer(new C2S_RequestSolve(gun.getBlockPos()));
+        C2S_RequestSolve.send(gun.getBlockPos());
     }
 
     private void onFire(boolean high){
-        NetworkHandler.CHANNEL.sendToServer(new C2S_Fire(gun.getBlockPos(), high));
+        C2S_Fire.send(gun.getBlockPos(), high);
     }
 
     @Override
