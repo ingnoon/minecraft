@@ -13,7 +13,7 @@ public final class ArtilleryMenu extends AbstractContainerMenu {
     private final GunBlockEntity gun;
 
     public ArtilleryMenu(int id, Inventory inv, GunBlockEntity gun) {
-        super(ModMenus.ARTILLERY_MENU.get(), id);
+        super(ModMenus.ARTILLERY_MENU, id);
         this.gun = gun;
     }
 
