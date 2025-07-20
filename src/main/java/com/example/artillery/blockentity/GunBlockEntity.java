@@ -30,12 +30,12 @@ public final class GunBlockEntity extends BlockEntity {
     public static final int FIRE_COOLDOWN_TICKS = 200; // 10s
 
     public GunBlockEntity(BlockPos pos, BlockState state) {
-        this(ModBlockEntities.GUN_BLOCK_ENTITY.get(), pos, state);
+        this(ModBlockEntities.GUN_BLOCK_ENTITY, pos, state);
     }
 
     public GunBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.muzzleVel = ArtilleryConfig.DEFAULT_MUZZLE_VEL.get();
+        this.muzzleVel = ArtilleryConfig.DEFAULT_MUZZLE_VEL;
     }
 
     // getters/setters -----------------------------------------------------
@@ -95,7 +95,7 @@ public final class GunBlockEntity extends BlockEntity {
         Vec3 vel = new Vec3(vx, vy, vz);
 
         ServerLevel sl = (ServerLevel)level;
-        ArtilleryShellEntity shell = new ArtilleryShellEntity(ModEntities.ARTILLERY_SHELL.get(), sl);
+        ArtilleryShellEntity shell = new ArtilleryShellEntity(ModEntities.ARTILLERY_SHELL, sl);
         shell.setPos(gun.x, gun.y, gun.z);
         shell.init(vel);
         sl.addFreshEntity(shell);

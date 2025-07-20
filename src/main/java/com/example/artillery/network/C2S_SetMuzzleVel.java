@@ -1,28 +1,31 @@
 package com.example.artillery.network;
 
 import com.example.artillery.blockentity.GunBlockEntity;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import java.util.function.Supplier;
 
 public record C2S_SetMuzzleVel(BlockPos gunPos, int muzzleVel) {
-    public static void encode(C2S_SetMuzzleVel msg, FriendlyByteBuf buf) {
-        buf.writeBlockPos(msg.gunPos);
-        buf.writeVarInt(msg.muzzleVel);
+    public static void send(BlockPos pos, int vel) {
+        var buf = PacketByteBufs.create();
+        buf.writeBlockPos(pos);
+        buf.writeVarInt(vel);
+        ClientPlayNetworking.send(NetworkHandler.SET_MUZZLE, buf);
     }
-    public static C2S_SetMuzzleVel decode(FriendlyByteBuf buf) {
-        return new C2S_SetMuzzleVel(buf.readBlockPos(), buf.readVarInt());
-    }
-    public static void handle(C2S_SetMuzzleVel msg, Supplier<NetworkEvent.Context> ctxSup){
-        NetworkEvent.Context ctx = ctxSup.get();
-        ctx.enqueueWork(() -> {
-            ServerPlayer ply = ctx.getSender(); if (ply==null) return;
-            if (ply.level().getBlockEntity(msg.gunPos) instanceof GunBlockEntity gun) {
-                gun.setMuzzleVel(msg.muzzleVel);
+
+    public static void handle(MinecraftServer server, ServerPlayer player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender){
+        BlockPos pos = buf.readBlockPos();
+        int vel = buf.readVarInt();
+        server.execute(() -> {
+            if (player.level().getBlockEntity(pos) instanceof GunBlockEntity gun) {
+                gun.setMuzzleVel(vel);
             }
         });
-        ctx.setPacketHandled(true);
     }
 }
