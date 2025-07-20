@@ -1,27 +1,23 @@
 package com.example.artillery.network;
 
+import com.example.artillery.ArtilleryMod;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.SimpleChannel;
 
 public final class NetworkHandler {
     private NetworkHandler(){}
 
-    private static final String PROTOCOL = "1";
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-        new ResourceLocation("artillery", "main"),
-        () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals
-    );
-
-    private static int id = 0;
-    private static int nextId() { return id++; }
+    public static final ResourceLocation SET_TARGET = new ResourceLocation(ArtilleryMod.MODID, "set_target");
+    public static final ResourceLocation SET_MUZZLE = new ResourceLocation(ArtilleryMod.MODID, "set_muzzle");
+    public static final ResourceLocation REQUEST_SOLVE = new ResourceLocation(ArtilleryMod.MODID, "request_solve");
+    public static final ResourceLocation FIRE = new ResourceLocation(ArtilleryMod.MODID, "fire");
+    public static final ResourceLocation SOLUTION = new ResourceLocation(ArtilleryMod.MODID, "solution");
+    public static final ResourceLocation GUN_STATE = new ResourceLocation(ArtilleryMod.MODID, "gun_state");
 
     public static void init() {
-        CHANNEL.registerMessage(nextId(), C2S_SetTarget.class, C2S_SetTarget::encode, C2S_SetTarget::decode, C2S_SetTarget::handle);
-        CHANNEL.registerMessage(nextId(), C2S_SetMuzzleVel.class, C2S_SetMuzzleVel::encode, C2S_SetMuzzleVel::decode, C2S_SetMuzzleVel::handle);
-        CHANNEL.registerMessage(nextId(), C2S_RequestSolve.class, C2S_RequestSolve::encode, C2S_RequestSolve::decode, C2S_RequestSolve::handle);
-        CHANNEL.registerMessage(nextId(), C2S_Fire.class, C2S_Fire::encode, C2S_Fire::decode, C2S_Fire::handle);
-        CHANNEL.registerMessage(nextId(), S2C_Solution.class, S2C_Solution::encode, S2C_Solution::decode, S2C_Solution::handle);
-        CHANNEL.registerMessage(nextId(), S2C_GunState.class, S2C_GunState::encode, S2C_GunState::decode, S2C_GunState::handle);
+        ServerPlayNetworking.registerGlobalReceiver(SET_TARGET, C2S_SetTarget::handle);
+        ServerPlayNetworking.registerGlobalReceiver(SET_MUZZLE, C2S_SetMuzzleVel::handle);
+        ServerPlayNetworking.registerGlobalReceiver(REQUEST_SOLVE, C2S_RequestSolve::handle);
+        ServerPlayNetworking.registerGlobalReceiver(FIRE, C2S_Fire::handle);
     }
 }

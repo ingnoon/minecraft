@@ -1,8 +1,6 @@
 package com.example.artillery;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
+
 
 /**
  * Physics + damage tuning knobs.
@@ -23,32 +21,13 @@ public final class ArtilleryConfig {
     public static final double TMAX = 300.0;        // s maximum sim time
 
     // --- configurable gameplay tuning ---
-    public static ForgeConfigSpec COMMON_SPEC;
-    public static ForgeConfigSpec.IntValue DEFAULT_MUZZLE_VEL; // m/s
-    public static ForgeConfigSpec.DoubleValue BLAST_RADIUS;    // block destroy radius
-    public static ForgeConfigSpec.DoubleValue CASUALTY_RADIUS; // entity damage radius
-    public static ForgeConfigSpec.DoubleValue BASE_DAMAGE;     // base damage scalar
-
-    static {
-        ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
-
-        DEFAULT_MUZZLE_VEL = b.comment("Default muzzle velocity (m/s) assigned to a new gun.")
-            .defineInRange("default_muzzle_velocity", 300, 50, 5000);
-
-        BLAST_RADIUS = b.comment("Block destruction radius on shell detonation (blocks==m).")
-            .defineInRange("blast_radius", 10.0, 0.0, 256.0);
-
-        CASUALTY_RADIUS = b.comment("Entity casualty radius (damage scales by distance).")
-            .defineInRange("casualty_radius", 100.0, 0.0, 1024.0);
-
-        BASE_DAMAGE = b.comment("Base damage multiplier at zero distance.")
-            .defineInRange("base_damage", 100.0, 0.0, 1_000_000.0);
-
-        COMMON_SPEC = b.build();
-    }
+    public static final int DEFAULT_MUZZLE_VEL = 300; // m/s
+    public static final double BLAST_RADIUS = 10.0;    // block destroy radius
+    public static final double CASUALTY_RADIUS = 100.0; // entity damage radius
+    public static final double BASE_DAMAGE = 100.0;     // base damage scalar
 
     public static void register() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC);
+        // no-op placeholder for compatibility
     }
 
     /** truncate to 5 decimals; guard -0.0 */
